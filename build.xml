@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="foal" default="setup">
+    <target name="setup" depends="clean,install-dependencies"/>
+
+    <target name="clean" description="Cleanup build artifacts">
+        <delete dir="${basedir}/build/phar"/>
+        <delete dir="${basedir}/vendor"/>
+        <delete file="${basedir}/composer.lock"/>
+        <delete>
+            <fileset dir="${basedir}/build">
+                <include name="**/foal*.phar"/>
+                <include name="**/foal*.phar.asc"/>
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="install-dependencies" unless="dependencies-installed" depends="-dependencies-installed" description="Install dependencies with Composer">
+        <exec executable="${basedir}/tools/composer" taskname="composer">
+            <arg value="update"/>
+            <arg value="--no-interaction"/>
+            <arg value="--no-progress"/>
+            <arg value="--no-ansi"/>
+            <arg value="--no-suggest"/>
+        </exec>
+    </target>
+
+    <target name="update-tools">
+        <exec executable="phive">
+            <arg value="--no-progress"/>
+            <arg value="update"/>
+        </exec>
+
+        <exec executable="${basedir}/tools/composer">
+            <arg value="self-update"/>
+        </exec>
+    </target>
+
+    <target name="fix" description="Fix coding guidelines violations with php-cs-fixer">
+        <exec executable="${basedir}/tools/php-cs-fixer" taskname="php-cs-fixer">
+            <arg value="fix" />
+        </exec>
+    </target>
+
+    <target name="test" depends="install-dependencies" description="Run tests with PHPUnit">
+        <exec executable="${basedir}/tools/phpunit" taskname="phpunit" failonerror="true"/>
+    </target>
+
+    <target name="signed-phar" description="Create signed PHP Archive (PHAR) of FOAL and all its dependencies" depends="phar">
+        <exec executable="bash" outputproperty="version">
+            <arg value="-c" />
+            <arg value="${basedir}/foal --version | awk 'BEGIN { ORS = &quot;&quot;; } {print $2}'" />
+        </exec>
+
+        <exec executable="gpg" failonerror="true">
+            <arg value="--armor" />
+            <arg value="--detach-sign" />
+            <arg path="${basedir}/build/foal-${version}.phar" />
+        </exec>
+    </target>
+
+    <target name="phar" description="Create PHP Archive (PHAR) of FOAL and all its dependencies" depends="setup,phar-build">
+        <mkdir dir="${basedir}/build/phar"/>
+    </target>
+
+    <target name="phar-build">
+        <exec executable="bash" outputproperty="version">
+            <arg value="-c" />
+            <arg value="${basedir}/foal --version | awk 'BEGIN { ORS = &quot;&quot;; } {print $2}'" />
+        </exec>
+
+        <copy todir="${basedir}/build/phar/src">
+            <fileset dir="${basedir}/src">
+                <include name="**/*.php" />
+            </fileset>
+        </copy>
+
+        <copy todir="${basedir}/build/phar/version">
+            <fileset dir="${basedir}/vendor/sebastian/version/src">
+                <include name="**/*.php" />
+                <exclude name="**/autoload.php" />
+            </fileset>
+        </copy>
+
+        <copy todir="${basedir}/build/phar/symfony">
+            <fileset dir="${basedir}/vendor/symfony">
+                <include name="**/*.php" />
+                <exclude name="**/Tests/**" />
+            </fileset>
+        </copy>
+
+        <exec executable="${basedir}/build/phar-manifest.php" output="${basedir}/build/phar/manifest.txt"/>
+
+        <exec executable="${basedir}/tools/phpab">
+            <arg value="--all" />
+            <arg value="--phar" />
+            <arg value="--output" />
+            <arg path="${basedir}/build/foal-${version}.phar" />
+            <arg value="--template" />
+            <arg path="${basedir}/build/phar-autoload.php.in" />
+            <arg value="--indent" />
+            <arg value="            " />
+            <arg path="${basedir}/build/phar" />
+        </exec>
+
+        <chmod file="${basedir}/build/foal-${version}.phar" perm="ugo+rx"/>
+    </target>
+
+    <target name="-dependencies-installed">
+        <available file="${basedir}/vendor" property="dependencies-installed" type="dir"/>
+    </target>
+</project>

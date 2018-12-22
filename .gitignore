@@ -1,0 +1,7 @@
+/.idea
+/.php_cs.cache
+/.php_cs
+/build/phar
+/build/*.phar*
+/composer.lock
+/vendor

@@ -1,0 +1,49 @@
+{
+    "name": "sebastian/foal",
+    "description": "Tool to find lines eliminated by OpCache's bytecode optimizer",
+    "homepage": "https://github.com/sebastianbergmann/foal",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Sebastian Bergmann",
+            "email": "sebastian@phpunit.de",
+            "role": "lead"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/sebastianbergmann/foal/issues"
+    },
+    "config": {
+        "platform": {
+            "php": "7.3.0"
+        },
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.3",
+        "ext-zend-opcache": "*",
+        "ext-vld": "*",
+        "sebastian/version": "^2.0.1",
+        "symfony/console": "^4.0"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/_fixture/"
+        ]
+    },
+    "bin": [
+        "foal"
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
