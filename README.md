@@ -42,6 +42,6 @@ foal 1.0.0 by Sebastian Bergmann.
 
 The OpCache optimizer eliminated the following sourcecode lines:
 
-4      $result = 'result';
+4          $result = 'result';
 7      }
 ```
