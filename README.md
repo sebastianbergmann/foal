@@ -38,7 +38,7 @@ function f()
 
 ```
 $ php foal.phar example.php
-foal 1.0.0 by Sebastian Bergmann.
+foal 0.1.0 by Sebastian Bergmann.
 
 The OpCache optimizer eliminated the following sourcecode lines:
 

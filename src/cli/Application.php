@@ -22,7 +22,7 @@ final class Application extends AbstractApplication
 {
     public function __construct()
     {
-        $version = new Version('1.0', \dirname(__DIR__, 2));
+        $version = new Version('0.1.0', \dirname(__DIR__, 2));
 
         parent::__construct('foal', $version->getVersion());
     }
