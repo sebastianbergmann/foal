@@ -4,23 +4,17 @@
 
 ## Installation
 
-### PHP Archive (PHAR)
+The recommended way to use this tool is a [PHP Archive (PHAR)](https://php.net/phar):
 
-The easiest way to obtain `foal`is to download a [PHP Archive (PHAR)](https://php.net/phar) that has all required dependencies bundled in a single file:
-
-```
+```bash
 $ wget https://phar.phpunit.de/foal.phar
+
+$ php foal.phar --version
 ```
 
-### Composer
+Furthermore, it is recommended to use [Phive](https://phar.io/) for installing and updating the tool dependencies of your project.
 
-You can add this tool as a local, per-project, development-time dependency to your project using [Composer](https://getcomposer.org/):
-
-```
-$ composer require --dev sebastian/foal
-```
-
-You can then invoke it using the `./vendor/bin/foal` executable.
+Alternatively, you may use [Composer](https://getcomposer.org/) to download and install this tool as well as its dependencies. [This is not recommended, though.](https://twitter.com/s_bergmann/status/999635212723212288)
 
 
 ## Usage
