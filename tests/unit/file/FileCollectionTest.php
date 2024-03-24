@@ -56,6 +56,7 @@ final class FileCollectionTest extends TestCase
     private function file(): File
     {
         return new File(
+            __DIR__ . '/../../fixture/source.php',
             file(__DIR__ . '/../../fixture/source.php'),
             [4, 7],
         );

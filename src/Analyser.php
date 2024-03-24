@@ -31,6 +31,7 @@ final readonly class Analyser
 
         foreach ($files as $file) {
             $result[] = new File(
+                $file,
                 file($file),
                 $this->linesEliminatedByOptimizer($file),
             );

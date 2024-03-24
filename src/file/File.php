@@ -12,6 +12,11 @@ namespace SebastianBergmann\FOAL;
 final readonly class File
 {
     /**
+     * @psalm-var non-empty-string
+     */
+    private string $path;
+
+    /**
      * @psalm-var list<string>
      */
     private array $sourceLines;
@@ -22,13 +27,23 @@ final readonly class File
     private array $linesEliminatedByOptimizer;
 
     /**
+     * @psalm-param non-empty-string $path
      * @psalm-param list<string> $sourceLines
      * @psalm-param list<int> $linesEliminatedByOptimizer
      */
-    public function __construct(array $sourceLines, array $linesEliminatedByOptimizer)
+    public function __construct(string $path, array $sourceLines, array $linesEliminatedByOptimizer)
     {
+        $this->path                       = $path;
         $this->sourceLines                = $sourceLines;
         $this->linesEliminatedByOptimizer = $linesEliminatedByOptimizer;
+    }
+
+    /**
+     * @psalm-return non-empty-string
+     */
+    public function path(): string
+    {
+        return $this->path;
     }
 
     /**

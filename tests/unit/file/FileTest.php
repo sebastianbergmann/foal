@@ -20,6 +20,14 @@ use PHPUnit\Framework\TestCase;
 #[TestDox('File')]
 final class FileTest extends TestCase
 {
+    public function testHasPath(): void
+    {
+        $this->assertSame(
+            __DIR__ . '/../../fixture/source.php',
+            $this->file()->path(),
+        );
+    }
+
     public function testHasSourceLines(): void
     {
         $this->assertSame(
@@ -39,6 +47,7 @@ final class FileTest extends TestCase
     private function file(): File
     {
         return new File(
+            __DIR__ . '/../../fixture/source.php',
             file(__DIR__ . '/../../fixture/source.php'),
             [4, 7],
         );
