@@ -11,13 +11,14 @@ namespace SebastianBergmann\FOAL;
 
 use function array_flip;
 use function array_key_exists;
-use function printf;
 use function rtrim;
+use function sprintf;
 
-final readonly class FilePrinter
+final readonly class FileRenderer
 {
-    public function print(File $file): void
+    public function render(File $file): string
     {
+        $buffer          = '';
         $sourceLines     = $file->sourceLines();
         $eliminatedLines = array_flip($file->linesEliminatedByOptimizer());
         $line            = 0;
@@ -25,12 +26,14 @@ final readonly class FilePrinter
         foreach ($sourceLines as $sourceLine) {
             $line++;
 
-            printf(
+            $buffer .= sprintf(
                 '%s %-6d %s' . PHP_EOL,
                 array_key_exists($line, $eliminatedLines) ? '-' : ' ',
                 $line,
                 rtrim($sourceLine),
             );
         }
+
+        return $buffer;
     }
 }

@@ -13,7 +13,7 @@ use const PHP_EOL;
 use function is_file;
 use function printf;
 use SebastianBergmann\FOAL\Analyser;
-use SebastianBergmann\FOAL\FilePrinter;
+use SebastianBergmann\FOAL\FileRenderer;
 
 final readonly class Application
 {
@@ -70,9 +70,9 @@ final readonly class Application
 
         $file = $this->analyser->analyse($arguments->file());
 
-        $printer = new FilePrinter;
+        $renderer = new FileRenderer;
 
-        $printer->print($file);
+        print $renderer->render($file);
 
         return 0;
     }
