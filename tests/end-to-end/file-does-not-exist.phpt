@@ -16,5 +16,5 @@ $_SERVER['argv'][] = 'does-not-exist.php';
 --EXPECTF--
 foal %s by Sebastian Bergmann.
 
-Cannot read file does-not-exist.php
+No files found to analyse
 

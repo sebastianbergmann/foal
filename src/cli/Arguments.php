@@ -12,46 +12,30 @@ namespace SebastianBergmann\FOAL\CLI;
 final readonly class Arguments
 {
     /**
-     * @psalm-var ?non-empty-string
+     * @psalm-var list<non-empty-string>
      */
-    private ?string $file;
+    private array $arguments;
     private bool $diff;
     private bool $help;
     private bool $version;
 
     /**
-     * @psalm-param ?non-empty-string $file
+     * @psalm-param list<non-empty-string> $arguments
      */
-    public function __construct(?string $file, bool $diff, bool $help, bool $version)
+    public function __construct(array $arguments, bool $diff, bool $help, bool $version)
     {
-        $this->file    = $file;
-        $this->diff    = $diff;
-        $this->help    = $help;
-        $this->version = $version;
+        $this->arguments = $arguments;
+        $this->diff      = $diff;
+        $this->help      = $help;
+        $this->version   = $version;
     }
 
     /**
-     * @psalm-assert-if-true !null $this->file
+     * @psalm-return list<non-empty-string>
      */
-    public function hasFile(): bool
+    public function arguments(): array
     {
-        return $this->file !== null;
-    }
-
-    /**
-     * @psalm-return non-empty-string
-     *
-     * @throws NoFileSpecifiedException
-     */
-    public function file(): string
-    {
-        if (!$this->hasFile()) {
-            // @codeCoverageIgnoreStart
-            throw new NoFileSpecifiedException;
-            // @codeCoverageIgnoreEnd
-        }
-
-        return $this->file;
+        return $this->arguments;
     }
 
     public function diff(): bool

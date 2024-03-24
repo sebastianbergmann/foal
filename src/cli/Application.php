@@ -10,11 +10,18 @@
 namespace SebastianBergmann\FOAL\CLI;
 
 use const PHP_EOL;
+use function array_merge;
+use function array_unique;
+use function array_values;
+use function assert;
+use function is_dir;
 use function is_file;
 use function printf;
+use function realpath;
+use SebastianBergmann\FileIterator\Facade;
 use SebastianBergmann\FOAL\Analyser;
 use SebastianBergmann\FOAL\DiffRenderer;
-use SebastianBergmann\FOAL\FileRenderer;
+use SebastianBergmann\FOAL\TextRenderer;
 
 final readonly class Application
 {
@@ -54,34 +61,60 @@ final readonly class Application
             return 0;
         }
 
-        if (!$arguments->hasFile()) {
+        if ($arguments->arguments() === []) {
             $this->help();
 
             return 1;
         }
 
-        if (!is_file($arguments->file())) {
-            printf(
-                'Cannot read file %s' . PHP_EOL,
-                $arguments->file(),
-            );
+        $files = [];
+
+        foreach ($arguments->arguments() as $argument) {
+            $candidate = realpath($argument);
+
+            if ($candidate === false) {
+                continue;
+            }
+
+            assert($candidate !== '');
+
+            if (is_file($candidate)) {
+                $files[] = $candidate;
+
+                continue;
+            }
+
+            if (is_dir($candidate)) {
+                $files = array_merge($files, (new Facade)->getFilesAsArray($candidate, '.php'));
+            }
+        }
+
+        if (empty($files)) {
+            print 'No files found to analyse' . PHP_EOL;
 
             return 1;
         }
 
-        $files = $this->analyser->analyse([$arguments->file()]);
+        $files = $this->analyser->analyse(array_values(array_unique($files)));
 
         if ($arguments->diff()) {
             $renderer = new DiffRenderer;
-
-            print $renderer->render($files->asArray()[0]);
-
-            return 0;
+        } else {
+            $renderer = new TextRenderer;
         }
 
-        $renderer = new FileRenderer;
+        $first = true;
 
-        print $renderer->render($files->asArray()[0]);
+        foreach ($files as $file) {
+            if (!$first) {
+                print PHP_EOL;
+            }
+
+            print $file->path() . PHP_EOL;
+            print $renderer->render($file);
+
+            $first = false;
+        }
 
         return 0;
     }
@@ -98,7 +131,7 @@ final readonly class Application
     {
         print <<<'EOT'
 Usage:
-  foal [options] <file>
+  foal [options] <directory|file> ...
 
   --diff                           Display optimized-away lines as diff
 

@@ -25,6 +25,7 @@
         "php": "^8.3",
         "ext-zend-opcache": "*",
         "ext-vld": "*",
+        "phpunit/php-file-iterator": "^5.0",
         "sebastian/cli-parser": "^3.0",
         "sebastian/diff": "^6.0",
         "sebastian/version": "^5.0"

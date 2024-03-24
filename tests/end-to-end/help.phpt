@@ -17,7 +17,7 @@ $_SERVER['argv'][] = '--help';
 foal %s by Sebastian Bergmann.
 
 Usage:
-  foal [options] <file>
+  foal [options] <directory|file> ...
 
   --diff                           Display optimized-away lines as diff
 

@@ -16,6 +16,7 @@ $_SERVER['argv'][] = __DIR__ . '/../fixture/source.php';
 --EXPECTF--
 foal %s by Sebastian Bergmann.
 
+%ssource.php
   1      <?php declare(strict_types=1);
   2      function f()
   3      {
