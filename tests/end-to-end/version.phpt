@@ -1,5 +1,9 @@
 --TEST--
 foal --version
+--SKIPIF--
+<?php declare(strict_types=1);
+if (!extension_loaded('Zend OPcache')) print 'skip: opcache not loaded' . PHP_EOL;
+if (!extension_loaded('vld')) print 'skip: vld not loaded' . PHP_EOL;
 --FILE--
 <?php declare(strict_types=1);
 namespace SebastianBergmann\FOAL\CLI;
