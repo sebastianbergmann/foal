@@ -10,7 +10,7 @@
 namespace SebastianBergmann\FOAL\CLI;
 
 use SebastianBergmann\FOAL\Analyser;
-use SebastianBergmann\FOAL\VldByteCodeDumper;
+use SebastianBergmann\FOAL\VldLinesWithOpcodesFinder;
 use SebastianBergmann\FOAL\VldParser;
 
 final readonly class Factory
@@ -19,7 +19,7 @@ final readonly class Factory
     {
         return new Application(
             new Analyser(
-                new VldByteCodeDumper(
+                new VldLinesWithOpcodesFinder(
                     new VldParser,
                 ),
             ),

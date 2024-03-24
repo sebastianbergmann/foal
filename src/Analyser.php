@@ -15,11 +15,11 @@ use function file;
 
 final readonly class Analyser
 {
-    private ByteCodeDumper $byteCodeDumper;
+    private LinesWithOpcodesFinder $finder;
 
-    public function __construct(ByteCodeDumper $byteCodeDumper)
+    public function __construct(LinesWithOpcodesFinder $finder)
     {
-        $this->byteCodeDumper = $byteCodeDumper;
+        $this->finder = $finder;
     }
 
     /**
@@ -48,8 +48,8 @@ final readonly class Analyser
     {
         return array_values(
             array_diff(
-                $this->byteCodeDumper->byteCode($file),
-                $this->byteCodeDumper->optimizedByteCode($file),
+                $this->finder->beforeOptimization($file),
+                $this->finder->afterOptimization($file),
             ),
         );
     }

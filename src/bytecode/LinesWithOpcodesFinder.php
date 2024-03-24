@@ -9,19 +9,19 @@
  */
 namespace SebastianBergmann\FOAL;
 
-interface ByteCodeDumper
+interface LinesWithOpcodesFinder
 {
     /**
      * @psalm-param non-empty-string $file
      *
      * @psalm-return list<int>
      */
-    public function byteCode(string $file): array;
+    public function beforeOptimization(string $file): array;
 
     /**
      * @psalm-param non-empty-string $file
      *
      * @psalm-return list<int>
      */
-    public function optimizedByteCode(string $file): array;
+    public function afterOptimization(string $file): array;
 }
