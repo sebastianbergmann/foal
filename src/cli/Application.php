@@ -10,15 +10,12 @@
 namespace SebastianBergmann\FOAL\CLI;
 
 use const PHP_EOL;
-use function dirname;
 use function printf;
 use SebastianBergmann\FOAL\Analyser;
 use SebastianBergmann\FOAL\FilePrinter;
-use SebastianBergmann\Version;
 
 final readonly class Application
 {
-    private const VERSION = '0.2';
     private Analyser $analyser;
 
     public function __construct(Analyser $analyser)
@@ -72,7 +69,7 @@ final readonly class Application
     {
         printf(
             'foal %s by Sebastian Bergmann.' . PHP_EOL,
-            (new Version(self::VERSION, dirname(__DIR__)))->asString(),
+            Version::id(),
         );
     }
 
