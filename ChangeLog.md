@@ -6,6 +6,7 @@ All notable changes are documented in this file using the [Keep a CHANGELOG](htt
 
 ### Added
 
+* Support for multiple arguments (directories and/or files)
 * `--diff` option to display optimized-away lines as diff
 
 ### Changed
