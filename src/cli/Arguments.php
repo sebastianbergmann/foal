@@ -44,7 +44,9 @@ final readonly class Arguments
     public function file(): string
     {
         if (!$this->hasFile()) {
+            // @codeCoverageIgnoreStart
             throw new NoFileSpecifiedException;
+            // @codeCoverageIgnoreEnd
         }
 
         return $this->file;
