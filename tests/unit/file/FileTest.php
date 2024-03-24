@@ -12,10 +12,12 @@ namespace SebastianBergmann\FOAL;
 use function file;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(File::class)]
 #[Small]
+#[TestDox('File')]
 final class FileTest extends TestCase
 {
     public function testHasSourceLines(): void
@@ -26,7 +28,7 @@ final class FileTest extends TestCase
         );
     }
 
-    public function testLinesEliminatedByOptimizer(): void
+    public function testHasLinesEliminatedByOptimizer(): void
     {
         $this->assertSame(
             [4, 7],

@@ -13,21 +13,23 @@ use function file;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(VldParser::class)]
 #[Small]
+#[TestDox('VldParser')]
 final class VldParserTest extends TestCase
 {
     public static function provider(): array
     {
         return [
-            'bytecode' => [
+            'before optimization' => [
                 [4, 6, 7, 8],
                 __DIR__ . '/../../fixture/source.bytecode',
             ],
 
-            'optimized bytecode' => [
+            'after optimization' => [
                 [6, 8],
                 __DIR__ . '/../../fixture/source.optimized-bytecode',
             ],
@@ -35,7 +37,8 @@ final class VldParserTest extends TestCase
     }
 
     #[DataProvider('provider')]
-    public function testParsesVldByteCodeDump(array $expected, string $filename): void
+    #[TestDox('Parses VLD bytecode dump')]
+    public function testParsesVldBytecodeDump(array $expected, string $filename): void
     {
         $parser = new VldParser;
 

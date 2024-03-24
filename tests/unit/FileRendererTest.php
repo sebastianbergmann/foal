@@ -12,12 +12,14 @@ namespace SebastianBergmann\FOAL;
 use function file;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(FileRenderer::class)]
 #[UsesClass(File::class)]
 #[Small]
+#[TestDox('FileRenderer')]
 final class FileRendererTest extends TestCase
 {
     public function testRendersFileAsString(): void
