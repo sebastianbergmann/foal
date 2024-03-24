@@ -3,6 +3,7 @@
     <target name="setup" depends="clean,install-dependencies"/>
 
     <target name="clean" description="Cleanup build artifacts">
+        <delete dir="${basedir}/build/artifacts"/>
         <delete dir="${basedir}/vendor"/>
     </target>
 
@@ -25,5 +26,110 @@
             <arg value="--no-progress"/>
             <arg value="update"/>
         </exec>
+    </target>
+
+    <target name="signed-phar" depends="phar" description="Create signed PHAR archive of FOAL and all its dependencies">
+        <exec executable="gpg" failonerror="true">
+            <arg value="--local-user"/>
+            <arg value="sb@sebastian-bergmann.de"/>
+            <arg value="--armor"/>
+            <arg value="--detach-sign"/>
+            <arg path="${basedir}/build/artifacts/foal-${version}.phar"/>
+        </exec>
+    </target>
+
+    <target name="phar" depends="-phar-prepare,-phar-determine-version" description="Create PHAR archive of FOAL and all its dependencies">
+        <antcall target="-phar-build">
+            <param name="type" value="release"/>
+        </antcall>
+    </target>
+
+    <target name="phar-snapshot" depends="-phar-prepare" description="Create PHAR archive of FOAL and all its dependencies (snapshot)">
+        <antcall target="-phar-build">
+            <param name="type" value="snapshot"/>
+        </antcall>
+    </target>
+
+    <target name="-phar-prepare" depends="clean,install-dependencies">
+        <mkdir dir="${basedir}/build/artifacts"/>
+        <mkdir dir="${basedir}/build/tmp/phar"/>
+        <mkdir dir="${basedir}/build/tmp/phar-scoped"/>
+
+        <copy file="${basedir}/composer.lock" tofile="${basedir}/build/tmp/phar/composer.lock"/>
+
+        <exec executable="${basedir}/build/scripts/phar-manifest.php" failonerror="true">
+            <arg path="${basedir}/build/tmp/phar/manifest.txt"/>
+            <arg path="${basedir}/build/tmp/phar/sbom.xml"/>
+        </exec>
+
+        <copy file="${basedir}/vendor/sebastian/cli-parser/LICENSE" tofile="${basedir}/build/tmp/phar/sebastian-cli-parser/LICENSE"/>
+        <copy todir="${basedir}/build/tmp/phar/sebastian-cli-parser">
+            <fileset dir="${basedir}/vendor/sebastian/cli-parser/src">
+                <include name="**/*.php" />
+            </fileset>
+        </copy>
+
+        <copy file="${basedir}/vendor/sebastian/version/LICENSE" tofile="${basedir}/build/tmp/phar/sebastian-version/LICENSE"/>
+        <copy todir="${basedir}/build/tmp/phar/sebastian-version">
+            <fileset dir="${basedir}/vendor/sebastian/version/src">
+                <include name="**/*.php" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="-phar-build" depends="-phar-determine-version">
+        <copy todir="${basedir}/build/tmp/phar/foal">
+            <fileset dir="${basedir}/src">
+                <include name="**/*.php"/>
+            </fileset>
+        </copy>
+
+        <exec executable="${basedir}/build/scripts/phar-version.php" outputproperty="_version" failonerror="true">
+            <arg value="${version}"/>
+            <arg value="${type}"/>
+        </exec>
+
+        <exec executable="${basedir}/tools/php-scoper" taskname="php-scoper" failonerror="true">
+            <arg value="add-prefix" />
+            <arg value="--no-ansi" />
+            <arg value="--force" />
+            <arg value="--config" />
+            <arg path="${basedir}/build/config/php-scoper.php" />
+            <arg value="--no-interaction" />
+            <arg value="--output-dir" />
+            <arg path="${basedir}/build/tmp/phar-scoped" />
+            <arg value="--prefix" />
+            <arg value="FOAL" />
+            <arg path="${basedir}/build/tmp/phar" />
+        </exec>
+
+        <copy file="${basedir}/build/templates/phar-autoload.php.in" tofile="${basedir}/build/tmp/binary-phar-autoload.php"/>
+        <replace file="${basedir}/build/tmp/binary-phar-autoload.php" token="X.Y.Z" value="${_version}"/>
+
+        <exec executable="${basedir}/tools/phpab" taskname="phpab" failonerror="true">
+            <arg value="--all" />
+            <arg value="--tolerant" />
+            <arg value="--nolower" />
+            <arg value="--phar" />
+            <arg value="--hash" />
+            <arg value="SHA-512" />
+            <arg value="--output" />
+            <arg path="${basedir}/build/artifacts/foal-${_version}.phar" />
+            <arg value="--template" />
+            <arg path="${basedir}/build/tmp/binary-phar-autoload.php" />
+            <arg path="${basedir}/build/tmp/phar-scoped" />
+        </exec>
+
+        <exec executable="${basedir}/build/scripts/phar-set-timestamps/run.php" taskname="phar-set-timestamps" failonerror="true">
+            <arg path="${basedir}/build/artifacts/foal-${_version}.phar" />
+        </exec>
+
+        <chmod file="${basedir}/build/artifacts/foal-${_version}.phar" perm="ugo+rx"/>
+
+        <delete dir="${basedir}/build/tmp"/>
+    </target>
+
+    <target name="-phar-determine-version">
+        <exec executable="${basedir}/build/scripts/version.php" outputproperty="version" failonerror="true" />
     </target>
 </project>

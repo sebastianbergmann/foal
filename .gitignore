@@ -3,4 +3,6 @@
 /.php-cs-fixer.php
 /.php-cs-fixer.cache
 /.phpunit.cache
+/build/artifacts
+/build/tmp
 /vendor
