@@ -34,7 +34,7 @@ function f()
 
 ```
 $ php foal.phar example.php
-foal 0.2.0 by Sebastian Bergmann.
+foal 0.2.1 by Sebastian Bergmann.
 
   1      <?php declare(strict_types=1);
   2      function f()
