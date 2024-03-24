@@ -2,7 +2,7 @@
 
 All notable changes are documented in this file using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
-## [0.3.0] - 2024-MM-DD
+## [0.3.0] - 2024-03-24
 
 ### Added
 
@@ -27,7 +27,7 @@ All notable changes are documented in this file using the [Keep a CHANGELOG](htt
 
 * Initial release
 
-[0.3.0]: https://github.com/sebastianbergmann/foal/compare/0.2.1...main
+[0.3.0]: https://github.com/sebastianbergmann/foal/compare/0.2.1...0.3.0
 [0.2.1]: https://github.com/sebastianbergmann/foal/compare/0.2.0...0.2.1
 [0.2.0]: https://github.com/sebastianbergmann/foal/compare/0.1.0...0.2.0
 [0.1.0]: https://github.com/sebastianbergmann/foal/compare/820e0c5e988a5f8bf09f38211174bd481d8e5dd9...0.1.0
