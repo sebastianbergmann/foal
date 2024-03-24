@@ -19,8 +19,6 @@ $ php foal.phar --version
 
 Furthermore, it is recommended to use [Phive](https://phar.io/) for installing and updating the tool dependencies of your project.
 
-**Please note that a PHAR distribution of this tool is currently not available.**
-
 ## Usage
 
 #### `example.php`
@@ -36,7 +34,7 @@ function f()
 
 ```
 $ php foal.phar example.php
-foal 0.2-dev by Sebastian Bergmann.
+foal 0.2.0 by Sebastian Bergmann.
 
   1      <?php declare(strict_types=1);
   2      function f()
