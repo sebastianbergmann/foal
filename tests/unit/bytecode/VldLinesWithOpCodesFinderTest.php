@@ -10,6 +10,7 @@
 namespace SebastianBergmann\FOAL;
 
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use PHPUnit\Framework\Attributes\Small;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\UsesClass;
@@ -19,6 +20,8 @@ use PHPUnit\Framework\TestCase;
 #[UsesClass(VldParser::class)]
 #[Small]
 #[TestDox('VldLinesWithOpCodesFinder')]
+#[RequiresPhpExtension('vld')]
+#[RequiresPhpExtension('Zend OPcache')]
 final class VldLinesWithOpCodesFinderTest extends TestCase
 {
     public function testFindsLinesWithOpcodesBeforeOptimization(): void
