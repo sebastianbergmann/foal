@@ -21,7 +21,7 @@ Furthermore, it is recommended to use [Phive](https://phar.io/) for installing a
 
 ## Usage
 
-#### `example.php`
+**`example.php`**
 ```php
 <?php declare(strict_types=1);
 function f()
@@ -32,9 +32,10 @@ function f()
 }
 ```
 
+### Default Output
 ```
 $ php foal.phar example.php
-foal 0.2.1 by Sebastian Bergmann.
+foal 0.3.0 by Sebastian Bergmann.
 
   1      <?php declare(strict_types=1);
   2      function f()
@@ -46,3 +47,22 @@ foal 0.2.1 by Sebastian Bergmann.
 ```
 
 Lines prefixed with `-` were optimized away by the OpCache bytecode optimizer.
+
+### Diff Output
+```
+$ php foal.phar --diff example.php
+foal 0.3.0 by Sebastian Bergmann.
+
+--- example.php
++++ example.php (optimized)
+@@ -1,7 +1,7 @@
+ <?php declare(strict_types=1);
+ function f()
+ {
+-    $result = 'result';
++ 
+     return $result;
+-}
++
+\ No newline at end of file
+```
