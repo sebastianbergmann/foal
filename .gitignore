@@ -1,7 +1,6 @@
+/.ant_targets
 /.idea
-/.php_cs.cache
-/.php_cs
-/build/phar
-/build/*.phar*
-/composer.lock
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+/.phpunit.cache
 /vendor

@@ -9,67 +9,82 @@
  */
 namespace SebastianBergmann\FOAL\CLI;
 
+use const PHP_EOL;
+use function dirname;
+use function printf;
+use SebastianBergmann\FOAL\Analyser;
+use SebastianBergmann\FOAL\FilePrinter;
 use SebastianBergmann\Version;
-use Symfony\Component\Console\Application as AbstractApplication;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @codeCoverageIgnore
- */
-final class Application extends AbstractApplication
+final readonly class Application
 {
-    public function __construct()
-    {
-        $version = new Version('0.1.0', \dirname(__DIR__, 2));
+    private const VERSION = '0.2';
+    private Analyser $analyser;
 
-        parent::__construct('foal', $version->getVersion());
+    public function __construct(Analyser $analyser)
+    {
+        $this->analyser = $analyser;
     }
 
-    public function getDefinition()
+    /**
+     * @psalm-param list<non-empty-string> $argv
+     */
+    public function run(array $argv): int
     {
-        $inputDefinition = parent::getDefinition();
+        $this->printVersion();
 
-        $inputDefinition->setArguments();
+        try {
+            $arguments = (new ArgumentsBuilder)->build($argv);
+        } catch (ArgumentsBuilderException $e) {
+            print PHP_EOL . $e->getMessage() . PHP_EOL;
 
-        return $inputDefinition;
-    }
-
-    public function doRun(InputInterface $input, OutputInterface $output): void
-    {
-        if (!$input->hasParameterOption('--quiet')) {
-            $output->write(
-                \sprintf(
-                    "foal %s by Sebastian Bergmann.\n\n",
-                    $this->getVersion()
-                )
-            );
+            return 1;
         }
 
-        if ($input->hasParameterOption('--version') ||
-            $input->hasParameterOption('-V')) {
-            exit;
+        if ($arguments->version()) {
+            return 0;
         }
 
-        if (!$input->getFirstArgument()) {
-            $input = new ArrayInput(['--help']);
+        print PHP_EOL;
+
+        if ($arguments->help()) {
+            $this->help();
+
+            return 0;
         }
 
-        parent::doRun($input, $output);
+        if (!$arguments->hasFile()) {
+            $this->help();
+
+            return 1;
+        }
+
+        $file = $this->analyser->analyse($arguments->file());
+
+        $printer = new FilePrinter;
+
+        $printer->print($file);
+
+        return 0;
     }
 
-    protected function getCommandName(InputInterface $input)
+    private function printVersion(): void
     {
-        return 'foal';
+        printf(
+            'foal %s by Sebastian Bergmann.' . PHP_EOL,
+            (new Version(self::VERSION, dirname(__DIR__)))->asString(),
+        );
     }
 
-    protected function getDefaultCommands()
+    private function help(): void
     {
-        $defaultCommands = parent::getDefaultCommands();
+        print <<<'EOT'
+Usage:
+  foal [options] <file>
 
-        $defaultCommands[] = new Command;
+  -h|--help                        Prints this usage information and exits
+  --version                        Prints the version and exits
 
-        return $defaultCommands;
+EOT;
     }
 }

@@ -9,90 +9,42 @@
  */
 namespace SebastianBergmann\FOAL;
 
-final class Analyser
+use function array_diff;
+use function array_values;
+use function file;
+
+final readonly class Analyser
 {
-    private const VLD_OPTIONS = '-d vld.active=1 -d vld.execute=0 -d vld.verbosity=0 -d vld.format=1 -d vld.col_sep=\';\'';
+    private ByteCodeDumper $byteCodeDumper;
 
-    private const OPCACHE_OPTIONS = '-d opcache.enable_cli=1 -d opcache.optimization_level=-1';
+    public function __construct(ByteCodeDumper $byteCodeDumper)
+    {
+        $this->byteCodeDumper = $byteCodeDumper;
+    }
 
     /**
-     * @return int[]
+     * @psalm-param non-empty-string $filename
      */
-    public function linesEliminatedByOptimizer(string $filename): array
+    public function analyse(string $filename): File
     {
-        return \array_diff(
-            $this->getByteCode($filename),
-            $this->getOptimizedByteCode($filename)
+        return new File(
+            file($filename),
+            $this->linesEliminatedByOptimizer($filename),
         );
     }
 
     /**
-     * @return int[]
+     * @psalm-param non-empty-string $filename
+     *
+     * @psalm-return list<int>
      */
-    private function getByteCode(string $filename): array
+    private function linesEliminatedByOptimizer(string $filename): array
     {
-        return $this->linesWithOpcodes(
-            $this->execute(
-                \PHP_BINARY . ' ' . self::VLD_OPTIONS . ' ' . $filename . ' 2>&1'
-            )
+        return array_values(
+            array_diff(
+                $this->byteCodeDumper->byteCode($filename),
+                $this->byteCodeDumper->optimizedByteCode($filename),
+            ),
         );
-    }
-
-    /**
-     * @return int[]
-     */
-    private function getOptimizedByteCode(string $filename): array
-    {
-        return $this->linesWithOpcodes(
-            $this->execute(
-                \PHP_BINARY . ' ' . self::VLD_OPTIONS . ' ' . self::OPCACHE_OPTIONS . ' ' . $filename . ' 2>&1'
-            )
-        );
-    }
-
-    /**
-     * @return string[]
-     */
-    private function execute(string $command): array
-    {
-        \exec($command, $output, $returnValue);
-
-        if ($returnValue !== 0) {
-            throw new RuntimeException(\implode("\r\n", $output));
-        }
-
-        return $output;
-    }
-
-    /**
-     * @return int[]
-     */
-    private function linesWithOpcodes(array $lines): array
-    {
-        $linesWithOpcodes = [];
-        $opArray          = false;
-
-        foreach ($lines as $line) {
-            if (\strpos($line, ';line') === 0) {
-                $opArray = true;
-
-                continue;
-            }
-
-            if ($line === ';') {
-                $opArray = false;
-            }
-
-            if (!$opArray) {
-                continue;
-            }
-
-            $linesWithOpcodes[] = (int) \explode(';', $line)[1];
-        }
-
-        $linesWithOpcodes = \array_unique($linesWithOpcodes);
-        \sort($linesWithOpcodes);
-
-        return $linesWithOpcodes;
     }
 }

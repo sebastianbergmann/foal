@@ -1,0 +1,23 @@
+;filename:;/path/to/source.php
+;functionname:;(null)
+;numberofops:;1
+;compiledvars:;none
+;line;#*;;;op;fetch;ext;return;operands
+;8;0;E>>;RETURN;;;;1;
+;
+;Functionf:
+;filename:;/path/to/source.php
+;functionname:;f
+;numberofops:;3
+;compiledvars:;!0=$result
+;line;#*;;;op;fetch;ext;return;operands
+;4;0;E>;ASSIGN;;;;!0;,;'result';
+;6;1;>;RETURN;;;;!0;
+;7;2;*>;RETURN;;;;null;
+;
+;Endoffunctionf
+
+branch: #  0; line:     8-    8; sop:     0; eop:     0; out0:  -2
+path #1: 0,
+branch: #  0; line:     4-    7; sop:     0; eop:     2
+path #1: 0,

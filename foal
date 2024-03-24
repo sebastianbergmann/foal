@@ -1,5 +1,7 @@
 #!/usr/bin/env php
 <?php declare(strict_types=1);
+namespace SebastianBergmann\FOAL\CLI;
+
 $loaded = false;
 
 foreach (array(__DIR__ . '/../../autoload.php', __DIR__ . '/vendor/autoload.php') as $file) {
@@ -18,5 +20,4 @@ if (!$loaded) {
     );
 }
 
-$application = new SebastianBergmann\FOAL\CLI\Application;
-$application->run();
+exit((new Factory)->createApplication()->run($_SERVER['argv']));

@@ -15,27 +15,22 @@
     },
     "config": {
         "platform": {
-            "php": "7.3.0"
+            "php": "8.3.0"
         },
         "optimize-autoloader": true,
         "sort-packages": true
     },
     "prefer-stable": true,
     "require": {
-        "php": "^7.3",
+        "php": "^8.3",
         "ext-zend-opcache": "*",
         "ext-vld": "*",
-        "sebastian/version": "^2.0.1",
-        "symfony/console": "^4.0"
+        "sebastian/cli-parser": "^3.0",
+        "sebastian/version": "^5.0"
     },
     "autoload": {
         "classmap": [
             "src/"
-        ]
-    },
-    "autoload-dev": {
-        "classmap": [
-            "tests/_fixture/"
         ]
     },
     "bin": [
@@ -43,7 +38,7 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-master": "0.1-dev"
+            "dev-main": "0.2-dev"
         }
     }
 }

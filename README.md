@@ -1,3 +1,8 @@
+[![No Maintenance Intended](https://unmaintained.tech/badge.svg)](https://unmaintained.tech/)
+[![CI Status](https://github.com/sebastianbergmann/foal/workflows/CI/badge.svg)](https://github.com/sebastianbergmann/foal/actions)
+[![Type Coverage](https://shepherd.dev/github/sebastianbergmann/foal/coverage.svg)](https://shepherd.dev/github/sebastianbergmann/foal)
+[![codecov](https://codecov.io/gh/sebastianbergmann/foal/branch/main/graph/badge.svg)](https://codecov.io/gh/sebastianbergmann/foal)
+
 # Find Optimized-Away Lines (FOAL)
 
 `foal` finds lines of code that are eliminated by OpCache's bytecode optimizer.
@@ -14,14 +19,13 @@ $ php foal.phar --version
 
 Furthermore, it is recommended to use [Phive](https://phar.io/) for installing and updating the tool dependencies of your project.
 
-Alternatively, you may use [Composer](https://getcomposer.org/) to download and install this tool as well as its dependencies. [This is not recommended, though.](https://twitter.com/s_bergmann/status/999635212723212288)
-
+**Please note that a PHAR distribution of this tool is currently not available.**
 
 ## Usage
 
 #### `example.php`
 ```php
-<?php
+<?php declare(strict_types=1);
 function f()
 {
     $result = 'result';
@@ -32,10 +36,15 @@ function f()
 
 ```
 $ php foal.phar example.php
-foal 0.1.0 by Sebastian Bergmann.
+foal 0.2-dev by Sebastian Bergmann.
 
-The OpCache optimizer eliminated the following sourcecode lines:
-
-4          $result = 'result';
-7      }
+  1      <?php declare(strict_types=1);
+  2      function f()
+  3      {
+- 4          $result = 'result';
+  5      
+  6          return $result;
+- 7      }
 ```
+
+Lines prefixed with `-` were optimized away by the OpCache bytecode optimizer.
