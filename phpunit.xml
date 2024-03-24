@@ -15,6 +15,10 @@
             <directory>tests/unit</directory>
         </testsuite>
 
+        <testsuite name="integration">
+            <directory>tests/integration</directory>
+        </testsuite>
+
         <testsuite name="end-to-end">
             <directory suffix=".phpt">tests/end-to-end</directory>
         </testsuite>

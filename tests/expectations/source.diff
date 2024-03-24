@@ -1,0 +1,12 @@
+--- %ssource.php
++++ %ssource.php (optimized)
+@@ -1,7 +1,7 @@
+ <?php declare(strict_types=1);
+ function f()
+ {
+-    $result = 'result';
++ 
+     return $result;
+-}
++
+\ No newline at end of file
