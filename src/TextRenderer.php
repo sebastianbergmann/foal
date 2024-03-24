@@ -18,7 +18,7 @@ final readonly class TextRenderer implements Renderer
 {
     public function render(File $file): string
     {
-        $buffer          = '';
+        $buffer          = $file->path() . PHP_EOL;
         $sourceLines     = $file->sourceLines();
         $eliminatedLines = array_flip($file->linesEliminatedByOptimizer());
         $line            = 0;

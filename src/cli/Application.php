@@ -110,7 +110,6 @@ final readonly class Application
                 print PHP_EOL;
             }
 
-            print $file->path() . PHP_EOL;
             print $renderer->render($file);
 
             $first = false;

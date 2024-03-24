@@ -24,7 +24,7 @@ final class TextRendererTest extends TestCase
 {
     public function testRendersFileAsString(): void
     {
-        $this->assertStringEqualsFile(
+        $this->assertStringMatchesFormatFile(
             __DIR__ . '/../expectations/source.txt',
             (new TextRenderer)->render($this->file()),
         );
