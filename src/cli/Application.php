@@ -68,11 +68,11 @@ final readonly class Application
             return 1;
         }
 
-        $file = $this->analyser->analyse($arguments->file());
+        $files = $this->analyser->analyse([$arguments->file()]);
 
         $renderer = new FileRenderer;
 
-        print $renderer->render($file);
+        print $renderer->render($files->asArray()[0]);
 
         return 0;
     }

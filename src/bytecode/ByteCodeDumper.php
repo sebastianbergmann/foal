@@ -12,16 +12,16 @@ namespace SebastianBergmann\FOAL;
 interface ByteCodeDumper
 {
     /**
-     * @psalm-param non-empty-string $filename
+     * @psalm-param non-empty-string $file
      *
      * @psalm-return list<int>
      */
-    public function byteCode(string $filename): array;
+    public function byteCode(string $file): array;
 
     /**
-     * @psalm-param non-empty-string $filename
+     * @psalm-param non-empty-string $file
      *
      * @psalm-return list<int>
      */
-    public function optimizedByteCode(string $filename): array;
+    public function optimizedByteCode(string $file): array;
 }

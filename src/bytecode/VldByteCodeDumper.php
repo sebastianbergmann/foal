@@ -33,29 +33,29 @@ final readonly class VldByteCodeDumper implements ByteCodeDumper
     }
 
     /**
-     * @psalm-param non-empty-string $filename
+     * @psalm-param non-empty-string $file
      *
      * @psalm-return list<int>
      */
-    public function byteCode(string $filename): array
+    public function byteCode(string $file): array
     {
         return $this->parser->linesWithOpcodes(
             $this->execute(
-                PHP_BINARY . ' ' . self::DISABLE_OPTIMIZATION_OPTIONS . ' ' . self::PRINT_OPCODES_OPTIONS . ' ' . $filename . ' 2>&1',
+                PHP_BINARY . ' ' . self::DISABLE_OPTIMIZATION_OPTIONS . ' ' . self::PRINT_OPCODES_OPTIONS . ' ' . $file . ' 2>&1',
             ),
         );
     }
 
     /**
-     * @psalm-param non-empty-string $filename
+     * @psalm-param non-empty-string $file
      *
      * @psalm-return list<int>
      */
-    public function optimizedByteCode(string $filename): array
+    public function optimizedByteCode(string $file): array
     {
         return $this->parser->linesWithOpcodes(
             $this->execute(
-                PHP_BINARY . ' ' . self::ENABLE_OPTIMIZATION_OPTIONS . ' ' . self::PRINT_OPCODES_OPTIONS . ' ' . $filename . ' 2>&1',
+                PHP_BINARY . ' ' . self::ENABLE_OPTIMIZATION_OPTIONS . ' ' . self::PRINT_OPCODES_OPTIONS . ' ' . $file . ' 2>&1',
             ),
         );
     }

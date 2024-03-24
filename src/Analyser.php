@@ -23,27 +23,33 @@ final readonly class Analyser
     }
 
     /**
-     * @psalm-param non-empty-string $filename
+     * @psalm-param non-empty-list<non-empty-string> $files
      */
-    public function analyse(string $filename): File
+    public function analyse(array $files): FileCollection
     {
-        return new File(
-            file($filename),
-            $this->linesEliminatedByOptimizer($filename),
-        );
+        $result = [];
+
+        foreach ($files as $file) {
+            $result[] = new File(
+                file($file),
+                $this->linesEliminatedByOptimizer($file),
+            );
+        }
+
+        return FileCollection::from(...$result);
     }
 
     /**
-     * @psalm-param non-empty-string $filename
+     * @psalm-param non-empty-string $file
      *
      * @psalm-return list<int>
      */
-    private function linesEliminatedByOptimizer(string $filename): array
+    private function linesEliminatedByOptimizer(string $file): array
     {
         return array_values(
             array_diff(
-                $this->byteCodeDumper->byteCode($filename),
-                $this->byteCodeDumper->optimizedByteCode($filename),
+                $this->byteCodeDumper->byteCode($file),
+                $this->byteCodeDumper->optimizedByteCode($file),
             ),
         );
     }

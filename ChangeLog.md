@@ -4,6 +4,10 @@ All notable changes are documented in this file using the [Keep a CHANGELOG](htt
 
 ## [0.3.0] - 2024-MM-DD
 
+### Changed
+
+* [#3](https://github.com/sebastianbergmann/foal/issues/3): Refactor `Analyser` to operate on list of files
+
 ## [0.2.1] - 2024-03-24
 
 * No functional changes
