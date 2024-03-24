@@ -62,6 +62,13 @@
             <arg path="${basedir}/build/tmp/phar/sbom.xml"/>
         </exec>
 
+        <copy file="${basedir}/vendor/phpunit/php-file-iterator/LICENSE" tofile="${basedir}/build/tmp/phar/php-file-iterator/LICENSE"/>
+        <copy todir="${basedir}/build/tmp/phar/php-file-iterator">
+            <fileset dir="${basedir}/vendor/phpunit/php-file-iterator/src">
+                <include name="**/*.php" />
+            </fileset>
+        </copy>
+
         <copy file="${basedir}/vendor/sebastian/cli-parser/LICENSE" tofile="${basedir}/build/tmp/phar/sebastian-cli-parser/LICENSE"/>
         <copy todir="${basedir}/build/tmp/phar/sebastian-cli-parser">
             <fileset dir="${basedir}/vendor/sebastian/cli-parser/src">
