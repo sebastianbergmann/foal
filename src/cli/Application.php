@@ -10,6 +10,7 @@
 namespace SebastianBergmann\FOAL\CLI;
 
 use const PHP_EOL;
+use function is_file;
 use function printf;
 use SebastianBergmann\FOAL\Analyser;
 use SebastianBergmann\FOAL\FilePrinter;
@@ -52,6 +53,15 @@ final readonly class Application
 
         if (!$arguments->hasFile()) {
             $this->help();
+
+            return 1;
+        }
+
+        if (!is_file($arguments->file())) {
+            printf(
+                'Cannot read file %s' . PHP_EOL,
+                $arguments->file(),
+            );
 
             return 1;
         }
