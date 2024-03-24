@@ -33,10 +33,12 @@ final readonly class Application
 
         try {
             $arguments = (new ArgumentsBuilder)->build($argv);
+            // @codeCoverageIgnoreStart
         } catch (ArgumentsBuilderException $e) {
             print PHP_EOL . $e->getMessage() . PHP_EOL;
 
             return 1;
+            // @codeCoverageIgnoreEnd
         }
 
         if ($arguments->version()) {

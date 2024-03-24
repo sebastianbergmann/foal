@@ -20,7 +20,9 @@ final class Version
     public static function id(): string
     {
         if (self::$pharVersion !== '') {
+            // @codeCoverageIgnoreStart
             return self::$pharVersion;
+            // @codeCoverageIgnoreEnd
         }
 
         if (self::$version === '') {

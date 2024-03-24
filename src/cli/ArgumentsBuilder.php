@@ -33,12 +33,14 @@ final readonly class ArgumentsBuilder
                     'version',
                 ],
             );
+            // @codeCoverageIgnoreStart
         } catch (CliParserException $e) {
             throw new ArgumentsBuilderException(
                 $e->getMessage(),
                 $e->getCode(),
                 $e,
             );
+            // @codeCoverageIgnoreEnd
         }
 
         $file    = null;
