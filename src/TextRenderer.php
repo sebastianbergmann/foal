@@ -14,7 +14,7 @@ use function array_key_exists;
 use function rtrim;
 use function sprintf;
 
-final readonly class FileRenderer
+final readonly class TextRenderer implements Renderer
 {
     public function render(File $file): string
     {

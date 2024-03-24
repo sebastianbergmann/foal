@@ -16,17 +16,17 @@ use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(FileRenderer::class)]
+#[CoversClass(TextRenderer::class)]
 #[UsesClass(File::class)]
 #[Small]
-#[TestDox('FileRenderer')]
-final class FileRendererTest extends TestCase
+#[TestDox('TextRenderer')]
+final class TextRendererTest extends TestCase
 {
     public function testRendersFileAsString(): void
     {
         $this->assertStringEqualsFile(
             __DIR__ . '/../expectations/source.txt',
-            (new FileRenderer)->render($this->file()),
+            (new TextRenderer)->render($this->file()),
         );
     }
 

@@ -12,7 +12,7 @@ namespace SebastianBergmann\FOAL;
 use SebastianBergmann\Diff\Differ;
 use SebastianBergmann\Diff\Output\StrictUnifiedDiffOutputBuilder;
 
-final readonly class DiffRenderer
+final readonly class DiffRenderer implements Renderer
 {
     public function render(File $file): string
     {
