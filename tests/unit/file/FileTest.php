@@ -21,7 +21,7 @@ final class FileTest extends TestCase
     public function testHasSourceLines(): void
     {
         $this->assertSame(
-            file(__DIR__ . '/../fixture/source.php'),
+            file(__DIR__ . '/../../fixture/source.php'),
             $this->file()->sourceLines(),
         );
     }
@@ -37,7 +37,7 @@ final class FileTest extends TestCase
     private function file(): File
     {
         return new File(
-            file(__DIR__ . '/../fixture/source.php'),
+            file(__DIR__ . '/../../fixture/source.php'),
             [4, 7],
         );
     }
