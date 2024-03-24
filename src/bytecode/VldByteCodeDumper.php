@@ -66,7 +66,9 @@ final readonly class VldByteCodeDumper implements ByteCodeDumper
     private function ensureOpCacheIsAvailable(): void
     {
         if (!extension_loaded('Zend OPcache')) {
+            // @codeCoverageIgnoreStart
             throw new OpcacheNotLoadedException;
+            // @codeCoverageIgnoreEnd
         }
     }
 
@@ -76,7 +78,9 @@ final readonly class VldByteCodeDumper implements ByteCodeDumper
     private function ensureVldIsAvailable(): void
     {
         if (!extension_loaded('vld')) {
+            // @codeCoverageIgnoreStart
             throw new VldNotLoadedException;
+            // @codeCoverageIgnoreEnd
         }
     }
 
@@ -88,7 +92,9 @@ final readonly class VldByteCodeDumper implements ByteCodeDumper
         exec($command, $output, $returnValue);
 
         if ($returnValue !== 0) {
+            // @codeCoverageIgnoreStart
             throw new ProcessException(implode("\r\n", $output));
+            // @codeCoverageIgnoreEnd
         }
 
         return $output;
