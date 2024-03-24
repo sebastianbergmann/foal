@@ -13,6 +13,7 @@ use const PHP_EOL;
 use function is_file;
 use function printf;
 use SebastianBergmann\FOAL\Analyser;
+use SebastianBergmann\FOAL\DiffRenderer;
 use SebastianBergmann\FOAL\FileRenderer;
 
 final readonly class Application
@@ -70,6 +71,14 @@ final readonly class Application
 
         $files = $this->analyser->analyse([$arguments->file()]);
 
+        if ($arguments->diff()) {
+            $renderer = new DiffRenderer;
+
+            print $renderer->render($files->asArray()[0]);
+
+            return 0;
+        }
+
         $renderer = new FileRenderer;
 
         print $renderer->render($files->asArray()[0]);
@@ -90,6 +99,8 @@ final readonly class Application
         print <<<'EOT'
 Usage:
   foal [options] <file>
+
+  --diff                           Display optimized-away lines as diff
 
   -h|--help                        Prints this usage information and exits
   --version                        Prints the version and exits

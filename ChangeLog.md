@@ -4,6 +4,10 @@ All notable changes are documented in this file using the [Keep a CHANGELOG](htt
 
 ## [0.3.0] - 2024-MM-DD
 
+### Added
+
+* `--diff` option to display optimized-away lines as diff
+
 ### Changed
 
 * [#3](https://github.com/sebastianbergmann/foal/issues/3): Refactor `Analyser` to operate on list of files

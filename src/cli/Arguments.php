@@ -15,15 +15,17 @@ final readonly class Arguments
      * @psalm-var ?non-empty-string
      */
     private ?string $file;
+    private bool $diff;
     private bool $help;
     private bool $version;
 
     /**
      * @psalm-param ?non-empty-string $file
      */
-    public function __construct(?string $file, bool $help, bool $version)
+    public function __construct(?string $file, bool $diff, bool $help, bool $version)
     {
         $this->file    = $file;
+        $this->diff    = $diff;
         $this->help    = $help;
         $this->version = $version;
     }
@@ -50,6 +52,11 @@ final readonly class Arguments
         }
 
         return $this->file;
+    }
+
+    public function diff(): bool
+    {
+        return $this->diff;
     }
 
     public function help(): bool
