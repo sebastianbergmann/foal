@@ -9,15 +9,20 @@
  */
 namespace SebastianBergmann\FOAL;
 
+use function assert;
 use function exec;
 use function extension_loaded;
+use function file_get_contents;
 use function implode;
+use function is_string;
 
 final readonly class VldDisassembler implements Disassembler
 {
-    private const string PRINT_OPCODES_OPTIONS        = '-d vld.active=1 -d vld.execute=0 -d vld.verbosity=0 -d vld.format=1 -d vld.col_sep=\';\'';
-    private const string ENABLE_OPTIMIZATION_OPTIONS  = '-d opcache.enable=1 -d opcache.enable_cli=1 -d opcache.optimization_level=-1';
-    private const string DISABLE_OPTIMIZATION_OPTIONS = '-d opcache.enable=0 -d opcache.enable_cli=0';
+    private const string VLD_OPTIONS_COMMON      = '-d vld.active=1 -d vld.execute=0 -d vld.verbosity=0';
+    private const string VLD_OPTIONS_BYTECODE    = self::VLD_OPTIONS_COMMON . ' -d vld.format=1 -d vld.col_sep=\';\'';
+    private const string VLD_OPTIONS_PATHS       = self::VLD_OPTIONS_COMMON . ' -d vld.save_paths=1 -d vld.save_dir=/tmp';
+    private const string OPCACHE_OPTIONS_ENABLE  = '-d opcache.enable=1 -d opcache.enable_cli=1 -d opcache.optimization_level=-1';
+    private const string OPCACHE_OPTIONS_DISABLE = '-d opcache.enable=0 -d opcache.enable_cli=0';
     private VldParser $parser;
 
     /**
@@ -41,7 +46,7 @@ final readonly class VldDisassembler implements Disassembler
     {
         return $this->parser->linesWithOpcodes(
             $this->execute(
-                PHP_BINARY . ' ' . self::DISABLE_OPTIMIZATION_OPTIONS . ' ' . self::PRINT_OPCODES_OPTIONS . ' ' . $file . ' 2>&1',
+                PHP_BINARY . ' ' . self::OPCACHE_OPTIONS_DISABLE . ' ' . self::VLD_OPTIONS_BYTECODE . ' ' . $file,
             ),
         );
     }
@@ -55,9 +60,45 @@ final readonly class VldDisassembler implements Disassembler
     {
         return $this->parser->linesWithOpcodes(
             $this->execute(
-                PHP_BINARY . ' ' . self::ENABLE_OPTIMIZATION_OPTIONS . ' ' . self::PRINT_OPCODES_OPTIONS . ' ' . $file . ' 2>&1',
+                PHP_BINARY . ' ' . self::OPCACHE_OPTIONS_ENABLE . ' ' . self::VLD_OPTIONS_BYTECODE . ' ' . $file,
             ),
         );
+    }
+
+    /**
+     * @psalm-param non-empty-string $file
+     *
+     * @psalm-return non-empty-string
+     */
+    public function pathsBeforeOptimization(string $file): string
+    {
+        $this->execute(
+            PHP_BINARY . ' ' . self::OPCACHE_OPTIONS_DISABLE . ' ' . self::VLD_OPTIONS_PATHS . ' ' . $file,
+        );
+
+        $buffer = file_get_contents('/tmp/paths.dot');
+
+        assert(is_string($buffer) && $buffer !== '');
+
+        return $buffer;
+    }
+
+    /**
+     * @psalm-param non-empty-string $file
+     *
+     * @psalm-return non-empty-string
+     */
+    public function pathsAfterOptimization(string $file): string
+    {
+        $this->execute(
+            PHP_BINARY . ' ' . self::OPCACHE_OPTIONS_ENABLE . ' ' . self::VLD_OPTIONS_PATHS . ' ' . $file,
+        );
+
+        $buffer = file_get_contents('/tmp/paths.dot');
+
+        assert(is_string($buffer) && $buffer !== '');
+
+        return $buffer;
     }
 
     /**
@@ -89,7 +130,7 @@ final readonly class VldDisassembler implements Disassembler
      */
     private function execute(string $command): array
     {
-        exec($command, $output, $returnValue);
+        exec($command . ' 2>&1', $output, $returnValue);
 
         if ($returnValue !== 0) {
             // @codeCoverageIgnoreStart

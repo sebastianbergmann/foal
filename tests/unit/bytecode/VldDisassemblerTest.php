@@ -40,6 +40,22 @@ final class VldDisassemblerTest extends TestCase
         );
     }
 
+    public function testFindsPathsBeforeOptimization(): void
+    {
+        $this->assertStringMatchesFormatFile(
+            __DIR__ . '/../../expectations/before-optimization.dot',
+            $this->disassembler()->pathsBeforeOptimization(__DIR__ . '/../../fixture/source.php'),
+        );
+    }
+
+    public function testFindsPathsAfterOptimization(): void
+    {
+        $this->assertStringMatchesFormatFile(
+            __DIR__ . '/../../expectations/after-optimization.dot',
+            $this->disassembler()->pathsAfterOptimization(__DIR__ . '/../../fixture/source.php'),
+        );
+    }
+
     private function disassembler(): VldDisassembler
     {
         return new VldDisassembler(new VldParser);

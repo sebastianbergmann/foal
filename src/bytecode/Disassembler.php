@@ -24,4 +24,18 @@ interface Disassembler
      * @psalm-return list<int>
      */
     public function linesWithOpcodesAfterOptimization(string $file): array;
+
+    /**
+     * @psalm-param non-empty-string $file
+     *
+     * @psalm-return non-empty-string
+     */
+    public function pathsBeforeOptimization(string $file): string;
+
+    /**
+     * @psalm-param non-empty-string $file
+     *
+     * @psalm-return non-empty-string
+     */
+    public function pathsAfterOptimization(string $file): string;
 }

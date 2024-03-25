@@ -1,0 +1,19 @@
+digraph {
+subgraph cluster_file_%s { label="file %ssource.php";
+subgraph cluster_%s {
+	label="__main";
+	graph [rankdir="LR"];
+	node [shape = record];
+	"__main_0" [ label = "{ op #0-0 | line 8-8 }" ];
+	__main_ENTRY -> __main_0
+	__main_0 -> __main_EXIT;
+}
+subgraph cluster_%s {
+	label="f";
+	graph [rankdir="LR"];
+	node [shape = record];
+	"f_0" [ label = "{ op #0-2 | line 4-7 }" ];
+	f_ENTRY -> f_0
+}
+}
+}
