@@ -26,15 +26,22 @@ final class VldDisassemblerTest extends TestCase
 {
     public function testFindsLinesWithOpcodesBeforeOptimization(): void
     {
-        $disassembler = new VldDisassembler(new VldParser);
-
-        $this->assertSame([4, 6, 7, 8], $disassembler->linesWithOpcodesBeforeOptimization(__DIR__ . '/../../fixture/source.php'));
+        $this->assertSame(
+            [4, 6, 7, 8],
+            $this->disassembler()->linesWithOpcodesBeforeOptimization(__DIR__ . '/../../fixture/source.php'),
+        );
     }
 
     public function testFindsLinesWithOpcodesAfterOptimization(): void
     {
-        $disassembler = new VldDisassembler(new VldParser);
+        $this->assertSame(
+            [6, 8],
+            $this->disassembler()->linesWithOpcodesAfterOptimization(__DIR__ . '/../../fixture/source.php'),
+        );
+    }
 
-        $this->assertSame([6, 8], $disassembler->linesWithOpcodesAfterOptimization(__DIR__ . '/../../fixture/source.php'));
+    private function disassembler(): VldDisassembler
+    {
+        return new VldDisassembler(new VldParser);
     }
 }
