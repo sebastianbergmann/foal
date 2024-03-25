@@ -14,6 +14,7 @@ use function array_merge;
 use function array_unique;
 use function array_values;
 use function assert;
+use function defined;
 use function is_dir;
 use function is_file;
 use function printf;
@@ -130,5 +131,15 @@ Usage:
   --version                        Prints the version and exits
 
 EOT;
+
+        if (defined('__FOAL_PHAR__')) {
+            print <<<'EOT'
+
+  --manifest                       Prints Software Bill of Materials (SBOM) in plain-text format and exits
+  --sbom                           Prints Software Bill of Materials (SBOM) in CycloneDX XML format and exits
+  --composer-lock                  Prints the composer.lock file used to build the PHAR and exits
+
+EOT;
+        }
     }
 }
