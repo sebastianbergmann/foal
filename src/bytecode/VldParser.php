@@ -15,6 +15,9 @@ use function sort;
 use function str_starts_with;
 use function trim;
 
+/**
+ * @internal This class is not covered by the backward compatibility promise for FOAL
+ */
 final readonly class VldParser
 {
     /**

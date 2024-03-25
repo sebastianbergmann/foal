@@ -12,6 +12,9 @@ namespace SebastianBergmann\FOAL\CLI;
 use function dirname;
 use SebastianBergmann\Version as VersionId;
 
+/**
+ * @internal This class is not covered by the backward compatibility promise for FOAL
+ */
 final class Version
 {
     private static string $pharVersion = '';

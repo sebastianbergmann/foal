@@ -13,6 +13,8 @@ use Iterator;
 
 /**
  * @template-implements Iterator<int, File>
+ *
+ * @internal This class is not covered by the backward compatibility promise for FOAL
  */
 final class FileCollectionIterator implements Iterator
 {

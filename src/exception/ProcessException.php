@@ -11,6 +11,9 @@ namespace SebastianBergmann\FOAL;
 
 use RuntimeException;
 
+/**
+ * @internal This class is not covered by the backward compatibility promise for FOAL
+ */
 final class ProcessException extends RuntimeException implements Exception
 {
 }

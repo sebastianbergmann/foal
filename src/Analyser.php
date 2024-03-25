@@ -13,6 +13,9 @@ use function array_diff;
 use function array_values;
 use function file;
 
+/**
+ * @internal This class is not covered by the backward compatibility promise for FOAL
+ */
 final readonly class Analyser
 {
     private Disassembler $disassembler;

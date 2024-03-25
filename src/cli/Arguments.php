@@ -9,6 +9,9 @@
  */
 namespace SebastianBergmann\FOAL\CLI;
 
+/**
+ * @internal This class is not covered by the backward compatibility promise for FOAL
+ */
 final readonly class Arguments
 {
     /**

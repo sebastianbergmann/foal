@@ -13,6 +13,9 @@ use SebastianBergmann\FOAL\Analyser;
 use SebastianBergmann\FOAL\VldDisassembler;
 use SebastianBergmann\FOAL\VldParser;
 
+/**
+ * @internal This class is not covered by the backward compatibility promise for FOAL
+ */
 final readonly class Factory
 {
     public function createApplication(): Application

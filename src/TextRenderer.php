@@ -14,6 +14,9 @@ use function array_key_exists;
 use function rtrim;
 use function sprintf;
 
+/**
+ * @internal This class is not covered by the backward compatibility promise for FOAL
+ */
 final readonly class TextRenderer implements Renderer
 {
     public function render(File $file): string

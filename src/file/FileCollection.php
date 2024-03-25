@@ -18,6 +18,8 @@ use IteratorAggregate;
  * @template-implements IteratorAggregate<int, File>
  *
  * @psalm-immutable
+ *
+ * @internal This class is not covered by the backward compatibility promise for FOAL
  */
 final readonly class FileCollection implements Countable, IteratorAggregate
 {

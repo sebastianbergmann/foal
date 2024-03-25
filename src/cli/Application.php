@@ -23,6 +23,9 @@ use SebastianBergmann\FileIterator\Facade;
 use SebastianBergmann\FOAL\Analyser;
 use SebastianBergmann\FOAL\TextRenderer;
 
+/**
+ * @internal This class is not covered by the backward compatibility promise for FOAL
+ */
 final readonly class Application
 {
     private Analyser $analyser;

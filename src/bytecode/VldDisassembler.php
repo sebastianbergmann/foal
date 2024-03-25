@@ -16,6 +16,9 @@ use function file_get_contents;
 use function implode;
 use function is_string;
 
+/**
+ * @internal This class is not covered by the backward compatibility promise for FOAL
+ */
 final readonly class VldDisassembler implements Disassembler
 {
     private const string VLD_OPTIONS_COMMON      = '-d vld.active=1 -d vld.execute=0 -d vld.verbosity=0';
