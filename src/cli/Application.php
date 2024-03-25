@@ -14,13 +14,16 @@ use function array_merge;
 use function array_unique;
 use function array_values;
 use function assert;
+use function count;
 use function defined;
+use function file_put_contents;
 use function is_dir;
 use function is_file;
 use function printf;
 use function realpath;
 use SebastianBergmann\FileIterator\Facade;
 use SebastianBergmann\FOAL\Analyser;
+use SebastianBergmann\FOAL\Disassembler;
 use SebastianBergmann\FOAL\TextRenderer;
 
 /**
@@ -29,10 +32,12 @@ use SebastianBergmann\FOAL\TextRenderer;
 final readonly class Application
 {
     private Analyser $analyser;
+    private Disassembler $disassembler;
 
-    public function __construct(Analyser $analyser)
+    public function __construct(Analyser $analyser, Disassembler $disassembler)
     {
-        $this->analyser = $analyser;
+        $this->analyser     = $analyser;
+        $this->disassembler = $disassembler;
     }
 
     /**
@@ -98,22 +103,13 @@ final readonly class Application
             return 1;
         }
 
-        $files = $this->analyser->analyse(array_values(array_unique($files)));
+        $files = array_values(array_unique($files));
 
-        $renderer = new TextRenderer;
-        $first    = true;
-
-        foreach ($files as $file) {
-            if (!$first) {
-                print PHP_EOL;
-            }
-
-            print $renderer->render($file);
-
-            $first = false;
+        if ($arguments->hasPaths()) {
+            return $this->handlePaths($files, $arguments->paths());
         }
 
-        return 0;
+        return $this->handleAnalysis($files);
     }
 
     private function printVersion(): void
@@ -130,6 +126,8 @@ final readonly class Application
 Usage:
   foal [options] <directory|file> ...
 
+  --paths <directory>              Write execution paths before/after bytecode optimization to files in DOT format
+
   -h|--help                        Prints this usage information and exits
   --version                        Prints the version and exits
 
@@ -144,5 +142,63 @@ EOT;
 
 EOT;
         }
+    }
+
+    /**
+     * @psalm-param non-empty-list<non-empty-string> $files
+     * @psalm-param non-empty-string $target
+     */
+    private function handlePaths(array $files, string $target): int
+    {
+        if (count($files) !== 1) {
+            print 'The --paths option only operates on a source single file' . PHP_EOL;
+
+            return 1;
+        }
+
+        $unoptimizedFile = $target . '/unoptimized.dot';
+
+        file_put_contents($unoptimizedFile, $this->disassembler->pathsBeforeOptimization($files[0]));
+
+        printf(
+            'Wrote execution paths for %s to %s' . PHP_EOL,
+            $files[0],
+            $unoptimizedFile,
+        );
+
+        $optimizedFile = $target . '/optimized.dot';
+
+        file_put_contents($optimizedFile, $this->disassembler->pathsAfterOptimization($files[0]));
+
+        printf(
+            'Wrote optimized execution paths for %s to %s' . PHP_EOL,
+            $files[0],
+            $optimizedFile,
+        );
+
+        return 0;
+    }
+
+    /**
+     * @psalm-param non-empty-list<non-empty-string> $files
+     */
+    private function handleAnalysis(array $files): int
+    {
+        $files = $this->analyser->analyse($files);
+
+        $renderer = new TextRenderer;
+        $first    = true;
+
+        foreach ($files as $file) {
+            if (!$first) {
+                print PHP_EOL;
+            }
+
+            print $renderer->render($file);
+
+            $first = false;
+        }
+
+        return 0;
     }
 }

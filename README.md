@@ -35,7 +35,7 @@ function f()
 ### Default Output
 ```
 $ php foal.phar example.php
-foal 0.3.0 by Sebastian Bergmann.
+foal 0.4.0 by Sebastian Bergmann.
 
   1      <?php declare(strict_types=1);
   2      function f()
@@ -47,3 +47,20 @@ foal 0.3.0 by Sebastian Bergmann.
 ```
 
 Lines prefixed with `-` were optimized away by the OpCache bytecode optimizer.
+
+### Graph Output
+```
+$ php foal.phar --paths example example/source.php             
+foal 0.4.0 by Sebastian Bergmann.
+
+Wrote execution paths for example/source.php to example/unoptimized.dot
+Wrote optimized execution paths for example/source.php to example/optimized.dot
+```
+```
+$ dot -Tsvg -o example/unoptimized.svg example/unoptimized.dot
+$ dot -Tsvg -o example/optimized.svg example/optimized.dot
+```
+
+| Before Bytecode Optimization            | After Bytecode Optimization         |
+|-----------------------------------------|-------------------------------------|
+| ![unoptimized](example/unoptimized.svg) | ![optimized](example/optimized.svg) |

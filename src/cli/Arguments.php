@@ -18,16 +18,23 @@ final readonly class Arguments
      * @psalm-var list<non-empty-string>
      */
     private array $arguments;
+
+    /**
+     * @psalm-var ?non-empty-string
+     */
+    private ?string $paths;
     private bool $help;
     private bool $version;
 
     /**
      * @psalm-param list<non-empty-string> $arguments
+     * @psalm-param ?non-empty-string $paths
      */
-    public function __construct(array $arguments, bool $help, bool $version)
+    public function __construct(array $arguments, ?string $paths, bool $help, bool $version)
     {
         $this->arguments = $arguments;
         $this->help      = $help;
+        $this->paths     = $paths;
         $this->version   = $version;
     }
 
@@ -37,6 +44,30 @@ final readonly class Arguments
     public function arguments(): array
     {
         return $this->arguments;
+    }
+
+    /**
+     * @psalm-assert-if-true !null $this->paths
+     */
+    public function hasPaths(): bool
+    {
+        return $this->paths !== null;
+    }
+
+    /**
+     * @psalm-return non-empty-string
+     *
+     * @throws PathsNotConfiguredException
+     */
+    public function paths(): string
+    {
+        if ($this->paths === null) {
+            // @codeCoverageIgnoreStart
+            throw new PathsNotConfiguredException;
+            // @codeCoverageIgnoreEnd
+        }
+
+        return $this->paths;
     }
 
     public function help(): bool

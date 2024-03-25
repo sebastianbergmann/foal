@@ -4,6 +4,10 @@ All notable changes are documented in this file using the [Keep a CHANGELOG](htt
 
 ## [0.4.0] - 2024-MM-DD
 
+### Added
+
+* `--paths` option to export execution paths before/after bytecode optimization in DOT format
+
 ### Changed
 
 * The PHAR-specific CLI options `--manifest`, `--sbom`, and `--composer-lock` are now included in the help output

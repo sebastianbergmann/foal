@@ -21,11 +21,15 @@ final readonly class Factory
     public function createApplication(): Application
     {
         return new Application(
-            new Analyser(
-                new VldDisassembler(
-                    new VldParser,
-                ),
-            ),
+            new Analyser($this->disassembler()),
+            $this->disassembler(),
+        );
+    }
+
+    private function disassembler(): VldDisassembler
+    {
+        return new VldDisassembler(
+            new VldParser,
         );
     }
 }
