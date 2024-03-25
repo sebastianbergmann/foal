@@ -20,9 +20,9 @@ final readonly class Analyser
 {
     private Disassembler $disassembler;
 
-    public function __construct(Disassembler $dis)
+    public function __construct(Disassembler $disassembler)
     {
-        $this->disassembler = $dis;
+        $this->disassembler = $disassembler;
     }
 
     /**
