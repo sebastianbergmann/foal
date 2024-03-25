@@ -47,22 +47,3 @@ foal 0.3.0 by Sebastian Bergmann.
 ```
 
 Lines prefixed with `-` were optimized away by the OpCache bytecode optimizer.
-
-### Diff Output
-```
-$ php foal.phar --diff example.php
-foal 0.3.0 by Sebastian Bergmann.
-
---- example.php
-+++ example.php (optimized)
-@@ -1,7 +1,7 @@
- <?php declare(strict_types=1);
- function f()
- {
--    $result = 'result';
-+ 
-     return $result;
--}
-+
-\ No newline at end of file
-```

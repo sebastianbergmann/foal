@@ -4,6 +4,10 @@ All notable changes are documented in this file using the [Keep a CHANGELOG](htt
 
 ## [0.4.0] - 2024-MM-DD
 
+### Removed
+
+* `--diff` option to display optimized-away lines as diff
+
 ## [0.3.0] - 2024-03-24
 
 ### Added

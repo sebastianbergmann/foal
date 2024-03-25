@@ -20,7 +20,6 @@ use function printf;
 use function realpath;
 use SebastianBergmann\FileIterator\Facade;
 use SebastianBergmann\FOAL\Analyser;
-use SebastianBergmann\FOAL\DiffRenderer;
 use SebastianBergmann\FOAL\TextRenderer;
 
 final readonly class Application
@@ -97,13 +96,8 @@ final readonly class Application
 
         $files = $this->analyser->analyse(array_values(array_unique($files)));
 
-        if ($arguments->diff()) {
-            $renderer = new DiffRenderer;
-        } else {
-            $renderer = new TextRenderer;
-        }
-
-        $first = true;
+        $renderer = new TextRenderer;
+        $first    = true;
 
         foreach ($files as $file) {
             if (!$first) {
@@ -131,8 +125,6 @@ final readonly class Application
         print <<<'EOT'
 Usage:
   foal [options] <directory|file> ...
-
-  --diff                           Display optimized-away lines as diff
 
   -h|--help                        Prints this usage information and exits
   --version                        Prints the version and exits

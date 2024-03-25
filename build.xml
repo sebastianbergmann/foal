@@ -76,13 +76,6 @@
             </fileset>
         </copy>
 
-        <copy file="${basedir}/vendor/sebastian/diff/LICENSE" tofile="${basedir}/build/tmp/phar/sebastian-diff/LICENSE"/>
-        <copy todir="${basedir}/build/tmp/phar/sebastian-diff">
-            <fileset dir="${basedir}/vendor/sebastian/diff/src">
-                <include name="**/*.php" />
-            </fileset>
-        </copy>
-
         <copy file="${basedir}/vendor/sebastian/version/LICENSE" tofile="${basedir}/build/tmp/phar/sebastian-version/LICENSE"/>
         <copy todir="${basedir}/build/tmp/phar/sebastian-version">
             <fileset dir="${basedir}/vendor/sebastian/version/src">

@@ -17,7 +17,5 @@ foal %s by Sebastian Bergmann.
 Usage:
   foal [options] <directory|file> ...
 
-  --diff                           Display optimized-away lines as diff
-
   -h|--help                        Prints this usage information and exits
   --version                        Prints the version and exits

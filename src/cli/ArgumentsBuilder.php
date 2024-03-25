@@ -28,7 +28,6 @@ final readonly class ArgumentsBuilder
                 $argv,
                 'hv',
                 [
-                    'diff',
                     'help',
                     'version',
                 ],
@@ -43,7 +42,6 @@ final readonly class ArgumentsBuilder
             // @codeCoverageIgnoreEnd
         }
 
-        $diff    = false;
         $help    = false;
         $version = false;
 
@@ -51,11 +49,6 @@ final readonly class ArgumentsBuilder
             assert(is_array($option));
 
             switch ($option[0]) {
-                case '--diff':
-                    $diff = true;
-
-                    break;
-
                 case 'h':
                 case '--help':
                     $help = true;
@@ -72,7 +65,6 @@ final readonly class ArgumentsBuilder
 
         return new Arguments(
             $options[1],
-            $diff,
             $help,
             $version,
         );

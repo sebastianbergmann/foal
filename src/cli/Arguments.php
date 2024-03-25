@@ -15,17 +15,15 @@ final readonly class Arguments
      * @psalm-var list<non-empty-string>
      */
     private array $arguments;
-    private bool $diff;
     private bool $help;
     private bool $version;
 
     /**
      * @psalm-param list<non-empty-string> $arguments
      */
-    public function __construct(array $arguments, bool $diff, bool $help, bool $version)
+    public function __construct(array $arguments, bool $help, bool $version)
     {
         $this->arguments = $arguments;
-        $this->diff      = $diff;
         $this->help      = $help;
         $this->version   = $version;
     }
@@ -36,11 +34,6 @@ final readonly class Arguments
     public function arguments(): array
     {
         return $this->arguments;
-    }
-
-    public function diff(): bool
-    {
-        return $this->diff;
     }
 
     public function help(): bool
