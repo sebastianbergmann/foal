@@ -16,25 +16,25 @@ use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(VldLinesWithOpcodesFinder::class)]
+#[CoversClass(VldDisassembler::class)]
 #[UsesClass(VldParser::class)]
 #[Small]
-#[TestDox('VldLinesWithOpCodesFinder')]
+#[TestDox('VldDisassembler')]
 #[RequiresPhpExtension('vld')]
 #[RequiresPhpExtension('Zend OPcache')]
-final class VldLinesWithOpCodesFinderTest extends TestCase
+final class VldDisassemblerTest extends TestCase
 {
     public function testFindsLinesWithOpcodesBeforeOptimization(): void
     {
-        $dumper = new VldLinesWithOpcodesFinder(new VldParser);
+        $disassembler = new VldDisassembler(new VldParser);
 
-        $this->assertSame([4, 6, 7, 8], $dumper->beforeOptimization(__DIR__ . '/../../fixture/source.php'));
+        $this->assertSame([4, 6, 7, 8], $disassembler->linesWithOpcodesBeforeOptimization(__DIR__ . '/../../fixture/source.php'));
     }
 
     public function testFindsLinesWithOpcodesAfterOptimization(): void
     {
-        $dumper = new VldLinesWithOpcodesFinder(new VldParser);
+        $disassembler = new VldDisassembler(new VldParser);
 
-        $this->assertSame([6, 8], $dumper->afterOptimization(__DIR__ . '/../../fixture/source.php'));
+        $this->assertSame([6, 8], $disassembler->linesWithOpcodesAfterOptimization(__DIR__ . '/../../fixture/source.php'));
     }
 }

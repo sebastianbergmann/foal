@@ -15,11 +15,11 @@ use function file;
 
 final readonly class Analyser
 {
-    private LinesWithOpcodesFinder $finder;
+    private Disassembler $disassembler;
 
-    public function __construct(LinesWithOpcodesFinder $finder)
+    public function __construct(Disassembler $dis)
     {
-        $this->finder = $finder;
+        $this->disassembler = $dis;
     }
 
     /**
@@ -49,8 +49,8 @@ final readonly class Analyser
     {
         return array_values(
             array_diff(
-                $this->finder->beforeOptimization($file),
-                $this->finder->afterOptimization($file),
+                $this->disassembler->linesWithOpcodesBeforeOptimization($file),
+                $this->disassembler->linesWithOpcodesAfterOptimization($file),
             ),
         );
     }

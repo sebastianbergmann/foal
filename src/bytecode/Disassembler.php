@@ -9,19 +9,19 @@
  */
 namespace SebastianBergmann\FOAL;
 
-interface LinesWithOpcodesFinder
+interface Disassembler
 {
     /**
      * @psalm-param non-empty-string $file
      *
      * @psalm-return list<int>
      */
-    public function beforeOptimization(string $file): array;
+    public function linesWithOpcodesBeforeOptimization(string $file): array;
 
     /**
      * @psalm-param non-empty-string $file
      *
      * @psalm-return list<int>
      */
-    public function afterOptimization(string $file): array;
+    public function linesWithOpcodesAfterOptimization(string $file): array;
 }

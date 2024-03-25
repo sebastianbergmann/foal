@@ -13,7 +13,7 @@ use function exec;
 use function extension_loaded;
 use function implode;
 
-final readonly class VldLinesWithOpcodesFinder implements LinesWithOpcodesFinder
+final readonly class VldDisassembler implements Disassembler
 {
     private const string PRINT_OPCODES_OPTIONS        = '-d vld.active=1 -d vld.execute=0 -d vld.verbosity=0 -d vld.format=1 -d vld.col_sep=\';\'';
     private const string ENABLE_OPTIMIZATION_OPTIONS  = '-d opcache.enable=1 -d opcache.enable_cli=1 -d opcache.optimization_level=-1';
@@ -37,7 +37,7 @@ final readonly class VldLinesWithOpcodesFinder implements LinesWithOpcodesFinder
      *
      * @psalm-return list<int>
      */
-    public function beforeOptimization(string $file): array
+    public function linesWithOpcodesBeforeOptimization(string $file): array
     {
         return $this->parser->linesWithOpcodes(
             $this->execute(
@@ -51,7 +51,7 @@ final readonly class VldLinesWithOpcodesFinder implements LinesWithOpcodesFinder
      *
      * @psalm-return list<int>
      */
-    public function afterOptimization(string $file): array
+    public function linesWithOpcodesAfterOptimization(string $file): array
     {
         return $this->parser->linesWithOpcodes(
             $this->execute(
