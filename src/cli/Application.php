@@ -48,28 +48,28 @@ final readonly class Application
         $this->printVersion();
 
         try {
-            $arguments = (new ArgumentsBuilder)->build($argv);
+            $configuration = (new ConfigurationBuilder)->build($argv);
             // @codeCoverageIgnoreStart
-        } catch (ArgumentsBuilderException $e) {
+        } catch (ConfigurationBuilderException $e) {
             print PHP_EOL . $e->getMessage() . PHP_EOL;
 
             return 1;
             // @codeCoverageIgnoreEnd
         }
 
-        if ($arguments->version()) {
+        if ($configuration->version()) {
             return 0;
         }
 
         print PHP_EOL;
 
-        if ($arguments->help()) {
+        if ($configuration->help()) {
             $this->help();
 
             return 0;
         }
 
-        if ($arguments->arguments() === []) {
+        if ($configuration->arguments() === []) {
             $this->help();
 
             return 1;
@@ -77,7 +77,7 @@ final readonly class Application
 
         $files = [];
 
-        foreach ($arguments->arguments() as $argument) {
+        foreach ($configuration->arguments() as $argument) {
             $candidate = realpath($argument);
 
             if ($candidate === false) {
@@ -105,8 +105,8 @@ final readonly class Application
 
         $files = array_values(array_unique($files));
 
-        if ($arguments->hasPaths()) {
-            return $this->handlePaths($files, $arguments->paths());
+        if ($configuration->hasPaths()) {
+            return $this->handlePaths($files, $configuration->paths());
         }
 
         return $this->handleAnalysis($files);

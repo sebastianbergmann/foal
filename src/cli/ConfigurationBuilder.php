@@ -17,14 +17,14 @@ use SebastianBergmann\CliParser\Parser as CliParser;
 /**
  * @internal This class is not covered by the backward compatibility promise for FOAL
  */
-final readonly class ArgumentsBuilder
+final readonly class ConfigurationBuilder
 {
     /**
      * @psalm-param list<non-empty-string> $argv
      *
-     * @throws ArgumentsBuilderException
+     * @throws ConfigurationBuilderException
      */
-    public function build(array $argv): Arguments
+    public function build(array $argv): Configuration
     {
         try {
             $options = (new CliParser)->parse(
@@ -38,7 +38,7 @@ final readonly class ArgumentsBuilder
             );
             // @codeCoverageIgnoreStart
         } catch (CliParserException $e) {
-            throw new ArgumentsBuilderException(
+            throw new ConfigurationBuilderException(
                 $e->getMessage(),
                 $e->getCode(),
                 $e,
@@ -75,7 +75,7 @@ final readonly class ArgumentsBuilder
             }
         }
 
-        return new Arguments(
+        return new Configuration(
             $options[1],
             $paths,
             $help,

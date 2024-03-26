@@ -15,6 +15,6 @@ use SebastianBergmann\FOAL\Exception;
 /**
  * @internal This class is not covered by the backward compatibility promise for FOAL
  */
-final class ArgumentsBuilderException extends RuntimeException implements Exception
+final class ConfigurationBuilderException extends RuntimeException implements Exception
 {
 }
