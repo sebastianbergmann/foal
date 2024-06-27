@@ -15,20 +15,20 @@ namespace SebastianBergmann\FOAL\CLI;
 final readonly class Configuration
 {
     /**
-     * @psalm-var list<non-empty-string>
+     * @var list<non-empty-string>
      */
     private array $arguments;
 
     /**
-     * @psalm-var ?non-empty-string
+     * @var ?non-empty-string
      */
     private ?string $paths;
     private bool $help;
     private bool $version;
 
     /**
-     * @psalm-param list<non-empty-string> $arguments
-     * @psalm-param ?non-empty-string $paths
+     * @param list<non-empty-string> $arguments
+     * @param ?non-empty-string      $paths
      */
     public function __construct(array $arguments, ?string $paths, bool $help, bool $version)
     {
@@ -39,7 +39,7 @@ final readonly class Configuration
     }
 
     /**
-     * @psalm-return list<non-empty-string>
+     * @return list<non-empty-string>
      */
     public function arguments(): array
     {
@@ -47,7 +47,7 @@ final readonly class Configuration
     }
 
     /**
-     * @psalm-assert-if-true !null $this->paths
+     * @phpstan-assert-if-true !null $this->paths
      */
     public function hasPaths(): bool
     {
@@ -55,9 +55,9 @@ final readonly class Configuration
     }
 
     /**
-     * @psalm-return non-empty-string
-     *
      * @throws PathsNotConfiguredException
+     *
+     * @return non-empty-string
      */
     public function paths(): string
     {

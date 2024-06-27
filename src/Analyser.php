@@ -26,7 +26,7 @@ final readonly class Analyser
     }
 
     /**
-     * @psalm-param non-empty-list<non-empty-string> $files
+     * @param non-empty-list<non-empty-string> $files
      */
     public function analyse(array $files): FileCollection
     {
@@ -44,9 +44,9 @@ final readonly class Analyser
     }
 
     /**
-     * @psalm-param non-empty-string $file
+     * @param non-empty-string $file
      *
-     * @psalm-return list<int>
+     * @return list<int>
      */
     private function linesEliminatedByOptimizer(string $file): array
     {

@@ -41,9 +41,9 @@ final readonly class VldDisassembler implements Disassembler
     }
 
     /**
-     * @psalm-param non-empty-string $file
+     * @param non-empty-string $file
      *
-     * @psalm-return list<int>
+     * @return list<int>
      */
     public function linesWithOpcodesBeforeOptimization(string $file): array
     {
@@ -55,9 +55,9 @@ final readonly class VldDisassembler implements Disassembler
     }
 
     /**
-     * @psalm-param non-empty-string $file
+     * @param non-empty-string $file
      *
-     * @psalm-return list<int>
+     * @return list<int>
      */
     public function linesWithOpcodesAfterOptimization(string $file): array
     {
@@ -69,9 +69,9 @@ final readonly class VldDisassembler implements Disassembler
     }
 
     /**
-     * @psalm-param non-empty-string $file
+     * @param non-empty-string $file
      *
-     * @psalm-return non-empty-string
+     * @return non-empty-string
      */
     public function pathsBeforeOptimization(string $file): string
     {
@@ -87,9 +87,9 @@ final readonly class VldDisassembler implements Disassembler
     }
 
     /**
-     * @psalm-param non-empty-string $file
+     * @param non-empty-string $file
      *
-     * @psalm-return non-empty-string
+     * @return non-empty-string
      */
     public function pathsAfterOptimization(string $file): string
     {
@@ -129,7 +129,7 @@ final readonly class VldDisassembler implements Disassembler
     }
 
     /**
-     * @psalm-return list<string>
+     * @return list<string>
      */
     private function execute(string $command): array
     {

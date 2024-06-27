@@ -17,14 +17,14 @@ use IteratorAggregate;
 /**
  * @template-implements IteratorAggregate<int, File>
  *
- * @psalm-immutable
+ * @immutable
  *
  * @internal This class is not covered by the backward compatibility promise for FOAL
  */
 final readonly class FileCollection implements Countable, IteratorAggregate
 {
     /**
-     * @psalm-var list<File>
+     * @var list<File>
      */
     private array $files;
 
@@ -34,7 +34,7 @@ final readonly class FileCollection implements Countable, IteratorAggregate
     }
 
     /**
-     * @psalm-param list<File> $files
+     * @param list<File> $files
      */
     private function __construct(array $files)
     {
@@ -42,7 +42,7 @@ final readonly class FileCollection implements Countable, IteratorAggregate
     }
 
     /**
-     * @psalm-return list<File>
+     * @return list<File>
      */
     public function asArray(): array
     {

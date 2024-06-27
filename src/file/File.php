@@ -15,24 +15,24 @@ namespace SebastianBergmann\FOAL;
 final readonly class File
 {
     /**
-     * @psalm-var non-empty-string
+     * @var non-empty-string
      */
     private string $path;
 
     /**
-     * @psalm-var list<string>
+     * @var list<string>
      */
     private array $sourceLines;
 
     /**
-     * @psalm-var list<int>
+     * @var list<int>
      */
     private array $linesEliminatedByOptimizer;
 
     /**
-     * @psalm-param non-empty-string $path
-     * @psalm-param list<string> $sourceLines
-     * @psalm-param list<int> $linesEliminatedByOptimizer
+     * @param non-empty-string $path
+     * @param list<string>     $sourceLines
+     * @param list<int>        $linesEliminatedByOptimizer
      */
     public function __construct(string $path, array $sourceLines, array $linesEliminatedByOptimizer)
     {
@@ -42,7 +42,7 @@ final readonly class File
     }
 
     /**
-     * @psalm-return non-empty-string
+     * @return non-empty-string
      */
     public function path(): string
     {
@@ -50,7 +50,7 @@ final readonly class File
     }
 
     /**
-     * @psalm-return list<string>
+     * @return list<string>
      */
     public function sourceLines(): array
     {
@@ -58,7 +58,7 @@ final readonly class File
     }
 
     /**
-     * @psalm-return list<int>
+     * @return list<int>
      */
     public function linesEliminatedByOptimizer(): array
     {

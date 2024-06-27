@@ -41,7 +41,7 @@ final readonly class Application
     }
 
     /**
-     * @psalm-param list<non-empty-string> $argv
+     * @param list<non-empty-string> $argv
      */
     public function run(array $argv): int
     {
@@ -145,8 +145,8 @@ EOT;
     }
 
     /**
-     * @psalm-param non-empty-list<non-empty-string> $files
-     * @psalm-param non-empty-string $target
+     * @param non-empty-list<non-empty-string> $files
+     * @param non-empty-string                 $target
      */
     private function handlePaths(array $files, string $target): int
     {
@@ -180,7 +180,7 @@ EOT;
     }
 
     /**
-     * @psalm-param non-empty-list<non-empty-string> $files
+     * @param non-empty-list<non-empty-string> $files
      */
     private function handleAnalysis(array $files): int
     {

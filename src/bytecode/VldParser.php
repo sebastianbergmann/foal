@@ -21,9 +21,9 @@ use function trim;
 final readonly class VldParser
 {
     /**
-     * @psalm-param list<string> $lines
+     * @param list<string> $lines
      *
-     * @psalm-return list<int>
+     * @return list<int>
      */
     public function linesWithOpcodes(array $lines): array
     {

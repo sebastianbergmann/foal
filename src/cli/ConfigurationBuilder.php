@@ -20,7 +20,7 @@ use SebastianBergmann\CliParser\Parser as CliParser;
 final readonly class ConfigurationBuilder
 {
     /**
-     * @psalm-param list<non-empty-string> $argv
+     * @param list<non-empty-string> $argv
      *
      * @throws ConfigurationBuilderException
      */

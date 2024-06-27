@@ -1,6 +1,5 @@
 [![No Maintenance Intended](https://unmaintained.tech/badge.svg)](https://unmaintained.tech/)
 [![CI Status](https://github.com/sebastianbergmann/foal/workflows/CI/badge.svg)](https://github.com/sebastianbergmann/foal/actions)
-[![Type Coverage](https://shepherd.dev/github/sebastianbergmann/foal/coverage.svg)](https://shepherd.dev/github/sebastianbergmann/foal)
 [![codecov](https://codecov.io/gh/sebastianbergmann/foal/branch/main/graph/badge.svg)](https://codecov.io/gh/sebastianbergmann/foal)
 
 # Find Optimized-Away Lines (FOAL)

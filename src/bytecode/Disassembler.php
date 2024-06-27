@@ -15,30 +15,30 @@ namespace SebastianBergmann\FOAL;
 interface Disassembler
 {
     /**
-     * @psalm-param non-empty-string $file
+     * @param non-empty-string $file
      *
-     * @psalm-return list<int>
+     * @return list<int>
      */
     public function linesWithOpcodesBeforeOptimization(string $file): array;
 
     /**
-     * @psalm-param non-empty-string $file
+     * @param non-empty-string $file
      *
-     * @psalm-return list<int>
+     * @return list<int>
      */
     public function linesWithOpcodesAfterOptimization(string $file): array;
 
     /**
-     * @psalm-param non-empty-string $file
+     * @param non-empty-string $file
      *
-     * @psalm-return non-empty-string
+     * @return non-empty-string
      */
     public function pathsBeforeOptimization(string $file): string;
 
     /**
-     * @psalm-param non-empty-string $file
+     * @param non-empty-string $file
      *
-     * @psalm-return non-empty-string
+     * @return non-empty-string
      */
     public function pathsAfterOptimization(string $file): string;
 }
