@@ -9,6 +9,7 @@
  */
 namespace SebastianBergmann\FOAL;
 
+use function assert;
 use function file;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Small;
@@ -46,9 +47,13 @@ final class FileTest extends TestCase
 
     private function file(): File
     {
+        $sourceLines = file(__DIR__ . '/../../fixture/source.php');
+
+        assert($sourceLines !== false);
+
         return new File(
             __DIR__ . '/../../fixture/source.php',
-            file(__DIR__ . '/../../fixture/source.php'),
+            $sourceLines,
             [4, 7],
         );
     }

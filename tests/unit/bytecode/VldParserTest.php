@@ -9,6 +9,7 @@
  */
 namespace SebastianBergmann\FOAL;
 
+use function assert;
 use function file;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -21,6 +22,9 @@ use PHPUnit\Framework\TestCase;
 #[TestDox('VldParser')]
 final class VldParserTest extends TestCase
 {
+    /**
+     * @return non-empty-array<non-empty-string, array{0: list<int>, 1: non-empty-string}>
+     */
     public static function provider(): array
     {
         return [
@@ -36,12 +40,19 @@ final class VldParserTest extends TestCase
         ];
     }
 
+    /**
+     * @param list<int> $expected
+     */
     #[DataProvider('provider')]
     #[TestDox('Parses VLD bytecode dump')]
     public function testParsesVldBytecodeDump(array $expected, string $filename): void
     {
         $parser = new VldParser;
 
-        $this->assertSame($expected, $parser->linesWithOpcodes(file($filename)));
+        $lines = file($filename);
+
+        assert($lines !== false);
+
+        $this->assertSame($expected, $parser->linesWithOpcodes($lines));
     }
 }

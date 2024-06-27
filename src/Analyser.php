@@ -11,6 +11,7 @@ namespace SebastianBergmann\FOAL;
 
 use function array_diff;
 use function array_values;
+use function assert;
 use function file;
 
 /**
@@ -33,9 +34,13 @@ final readonly class Analyser
         $result = [];
 
         foreach ($files as $file) {
+            $sourceLines = file($file);
+
+            assert($sourceLines !== false);
+
             $result[] = new File(
                 $file,
-                file($file),
+                $sourceLines,
                 $this->linesEliminatedByOptimizer($file),
             );
         }

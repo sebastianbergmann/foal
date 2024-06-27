@@ -9,6 +9,7 @@
  */
 namespace SebastianBergmann\FOAL\CLI;
 
+use function assert;
 use function dirname;
 use SebastianBergmann\Version as VersionId;
 
@@ -29,7 +30,11 @@ final class Version
         }
 
         if (self::$version === '') {
-            self::$version = (new VersionId('0.4', dirname(__DIR__, 2)))->asString();
+            $path = dirname(__DIR__, 2);
+
+            assert($path !== '');
+
+            self::$version = (new VersionId('0.4', $path))->asString();
         }
 
         return self::$version;
