@@ -24,7 +24,7 @@ FOAL is a tool for analysing PHP bytecode. This is a development-time activity. 
 
 **If you upload FOAL to a webserver then your deployment process is broken. On a more general note, if your `vendor` directory is publicly accessible on your webserver then your deployment process is also broken.**
 
-Please note that if you upload FOAL to a webserver "bad things" may happen. [You have been warned.](https://thephp.cc/articles/phpunit-a-security-risk?ref=phpunit)
+Please note that if you upload FOAL to a webserver "bad things" may happen. [You have been warned.](https://phpunit.expert/articles/phpunit-a-security-risk.html?ref=github)
 
 FOAL is developed with a focus on development environments and the command-line. No specific testing or hardening with regard to using FOAL in an HTTP or web context or with untrusted input data is performed. FOAL might also contain functionality that intentionally exposes internal application data for debugging purposes.
 
